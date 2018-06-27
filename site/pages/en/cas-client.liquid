@@ -1,0 +1,22 @@
+<section class="{% if custom_entry.background_color == 'yes' %}grey-bg{% endif %}">
+  <div class="space-90"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 margin-b-30">
+        {% if custom_entry.illustration != blank %}
+            <img data-src="{{custom_entry.illustration}}" style="margin-{% if custom_entry.illustration_align == 'left' %}right{% else %}left{% endif %}:30px;" alt="{{custom_entry.titre_en}}" class="{% if custom_entry.illustration_align == 'left' %}float-left{% else %}float-right{% endif %} img-fluid">
+        {% endif %}
+        {% if custom_entry.titre_en != blank %}
+          <h3>{{custom_entry.titre_en}}</h3>
+        {% endif %}
+        {% if custom_entry.text_en != blank %}
+          <div class="margin-b-20">{{custom_entry.text_en}}</div>
+        {% endif %}
+        {% if custom_entry.bouton_texte_en != blank and custom_entry.bouton_lien != blank %}
+          <a href="{{custom_entry.bouton_lien}}" target='_blank' class="btn btn-lg btn-primary btn-rounded" title="{{custom_entry.titre_en}}">{{custom_entry.bouton_texte_en}}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="space-30"></div>
+</section>

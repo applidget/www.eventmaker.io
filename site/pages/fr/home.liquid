@@ -1,0 +1,206 @@
+{% capture display_modal %}{% editable_text "Afficher la modal ?", hint: "1 pour oui, 0 pour zero."%}1{% endeditable_text %}{% endcapture %}
+
+<section class="features-section border-bottom">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-3 margin-b-30">
+        <div class="feature-box-center text-center">
+          <i class="{% editable_text 'Intro bloc 1 class ionicone', hint: 'voir sur http://ionicons.com/', priority: 100 %}ion-iphone{% endeditable_text %}"></i>
+          <h4 class="text-capitalize">{% editable_text "Intro bloc 1 titre", priority: 100 %}Titre 1{% endeditable_text %}</h4>
+          {% editable_text "Intro bloc 1 texte", priority: 100, type: cktext_area %}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.{% endeditable_text %}
+        </div>
+      </div><!--/col-->
+      <div class="col-md-6 col-lg-3  margin-b-30">
+        <div class="feature-box-center text-center">
+          <i class="{% editable_text 'Intro bloc 2 class ionicone', hint: 'voir sur http://ionicons.com/', priority: 99 %}ion-ios-person-outline{% endeditable_text %}"></i>
+          <h4 class="text-capitalize">{% editable_text "Intro bloc 2 titre", priority: 99 %}Titre 2{% endeditable_text %}</h4>
+          {% editable_text "Intro bloc 2 texte", priority: 99, type: cktext_area %}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.{% endeditable_text %}
+        </div>
+      </div><!--/col-->
+      <div class="col-md-6 col-lg-3  margin-b-30">
+        <div class="feature-box-center text-center">
+          <i class="{% editable_text 'Intro bloc 3 class ionicone', hint: 'voir sur http://ionicons.com/', priority: 98 %}ion-ios-cog-outline{% endeditable_text %}"></i>
+          <h4 class="text-capitalize">{% editable_text "Intro bloc 3 titre", priority: 98 %}Titre 3{% endeditable_text %}</h4>
+          {% editable_text "Intro bloc 3 texte", priority: 98, type: cktext_area %}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.{% endeditable_text %}
+        </div>
+      </div><!--/col-->
+      <div class="col-md-6 col-lg-3 margin-b-30">
+        <div class="feature-box-center text-center">
+          <i class="{% editable_text 'Intro bloc 4 class ionicone', hint: 'voir sur http://ionicons.com/', priority: 97 %}ion-key{% endeditable_text %}"></i>
+          <h4 class="text-capitalize">{% editable_text "Intro bloc 4 titre", priority: 97 %}Titre 3{% endeditable_text %}</h4>
+          {% editable_text "Intro bloc 4 texte", priority: 97, type: cktext_area %}Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.{% endeditable_text %}
+        </div>
+      </div><!--/col-->
+    </div>
+  </div>
+</section><!--end features section-->
+
+{% assign sorted_all_articles = collections.articles | sort: 'rank' %}
+{% for article in sorted_all_articles  %}
+  {% if article.type == "home_page" %}
+    <section class="{% if article.background_color == 'yes' %}grey-bg{% endif %}">
+      <div class="space-90"></div>
+      <div class="container">
+        <div class="row align-items-center">
+          {% if article.illustration != blank and article.illustration_align == "left" %}
+            <div class="col-md-7 margin-b-30">
+              <img data-src="{{article.illustration}}" alt="{{article.titre}}" class="img-fluid">
+            </div>
+          {% endif %}
+          {% if article.titre != blank or article.text != blank %}
+            <div class="{% if article.illustration == blank %}col-md-12{% else %}col-md-5{% endif %} margin-b-30">
+              {% if article.titre != blank %}
+                <h3>{{article.titre}}</h3>
+              {% endif %}
+              {% if article.text != blank %}
+                <div  class="margin-b-20">
+                  {{article.text}}
+                </div>
+              {% endif %}
+              {% if article.bouton_texte != blank and article.bouton_lien != blank %}
+                <a href="{{article.bouton_lien}}" target='_blank' class="btn btn-lg btn-primary btn-rounded" title="{{article.bouton_texte}}">{{article.bouton_texte}}</a>
+              {% endif %}
+            </div>
+          {% endif %}
+          {% if article.illustration != blank and article.illustration_align == "right" %}
+            <div class="col-md-7 margin-b-30">
+              <img data-src="{{article.illustration}}" alt="{{article.titre}}" class="img-fluid">
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="space-30"></div>
+    </section>
+  {% endif %}
+{% endfor %}
+
+
+<section class="pricing-section" id="pricing">
+  <div class="space-90"></div>
+  <div class="container">
+    <div class="center-title">
+      <h2>{% editable_text 'Titre pricing', priority: 98 %}Easy plans. Cancel anytime.{% endeditable_text %}</h2>
+      <p>{% editable_text 'Sous-titre pricing', priority: 98 %}Les plans ci-dessous ont été pensés pour tous les events et tous les budgets.{% endeditable_text %}</p>
+    </div>
+    <div class="row">
+    {% assign sorted_all_plans = collections.plans | sort: 'rank' %}
+    {% for plan in sorted_all_plans  %}
+      <div class="col-md-4 margin-b-30">
+        <div class="price-box {% if plan.featured and plan.featured != 'none' %}{{plan.featured}}{% endif %}">
+          <div class="price-header">
+            <h1>{{plan.title}}</h1>
+            <h4>{{plan.pricing}}</h4>
+          </div>
+          <div class="price-footer">
+            <a href="{{plan.link}}" class="btn btn-rounded btn-dark-border" title="Voir les offres">Voir les offres</a>
+          </div>
+        </div>
+      </div><!--/col-->
+    {% endfor %}
+    </div>
+  </div>
+  <div class="space-60"></div>
+</section><!--end pricing section-->
+
+<section class="features-bg">
+  <div class="container">
+    <div class="center-title">
+      <h2>{% editable_text 'Titre Evenements', priority: 97 %}Why choose SAAS{% endeditable_text %}</h2>
+      <p>{% editable_text 'Sous-titre Evenements', priority: 97 %}Over 500,000 Customers worldwide{% endeditable_text %}</p>
+    </div>
+    <div class="row">
+      {% assign count_type_event = 0 %}
+      {% for article in sorted_all_articles %}
+        {% if article.type == "events_type" %}
+          <div class="col-md-6">
+            <div class="feature-icon-left clearfix">
+              <div class="icon">
+                <img class="img-event" data-src="{{article.illustration}}" alt="{{article.titre}}">
+              </div>
+              <div class="content">
+                <h4>{{article.titre}}</h4>
+                {% if article.text != blank %}
+                  {{article.text | strip_html | truncate: 100}}
+                {% endif %}
+                <p>
+                  <a href="/events/{{article.slug}}" title="{{article.titre}}">En savoir plus ...</a>
+                </p>
+              </div>
+            </div><!--/feature icon-->
+          </div>
+          {% assign count_type_event = count_type_event | plus: 1 %}
+          {% if count_type_event >= 19 %}
+            {% break %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <p class="text-right">
+      <a href="/events/">En savoir plus ...</a>
+    </p>
+  </div>
+</section>
+
+<section class="testimonials skin-bg">
+  <div class="space-90"></div>
+  <div class="container">
+    <div class="center-title">
+      <h2>{% editable_text 'Titre Word from cusomers', priority: 96 %}True words from our customers.{% endeditable_text %}</h2>
+      <p>{% editable_text 'Sous-titre Word from cusomers', priority: 96 %}Over 500,000 Customers worldwide{% endeditable_text %}</p>
+    </div>
+    <div class="row">
+      {% assign collection_word_from_customer = collections.word_from_customer | sort: 'rank' %}
+      {% for word_customer in collection_word_from_customer limit: 3 %}
+        <div class="col-md-4 margin-b-30">
+          <div class="feedback-box">
+            {{word_customer.quote}}
+          </div>
+          <div class="testi-info">
+            <img data-src="{{word_customer.avatar}}" alt="{{word_customer.quote | strip_html | truncatewords : 15 }}" class="rounded-circle" width="60">
+            <div class="content">
+              <h4>{{word_customer.name_customer}}</h4>
+              <em>{{word_customer.function}}</em>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="space-60"></div>
+</section><!--end testimonials section-->
+
+{% if display_modal != "0" %}
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="col-md-12 text-center">
+            <h5 class="modal-title">{% editable_text 'Titre modal' %}Applidget devient Eventmaker{% endeditable_text%}</h5>
+          </div>
+        </div>
+        <div class="modal-body text-center">
+          <img width="120px" data-src="{% editable_file 'logo applidget' %}https://events-cms.s3.amazonaws.com/uploads/editable_field/editable_element/file/59b7958e0c28740026cb7f68/logo_applidget_blue.png{% endeditable_file %}" alt="Mobicheckin appli">
+          <i class="ion-arrow-right-a" style="font-size: 39px; line-height: 60px; vertical-align: middle; margin: 0 20px;"></i>
+          <img width="180px" data-src="{% editable_file 'logo eventmaker' %}https://events-cms.s3.amazonaws.com/uploads/editable_field/editable_element/file/59b794980c28740026cb7f67/eventmaker_noir.png{% endeditable_file %}" alt="Em teal logo">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="{% editable_text 'URL vidéo modal' %}https://www.youtube.com/embed/xML7wi-n0v8{% endeditable_text %}" allowfullscreen></iframe>
+          </div>
+          {% editable_text 'Texte modal', type: cktext_area %}<p>Rassurez-vous, nous sommes toujours les m&ecirc;mes, seul notre nom change. Appelez-nous d&eacute;sormais Eventmaker !!!&nbsp;</p>
+  {% endeditable_text %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $(window).on('load',function(){
+      $('#myModal').modal('show');
+    });
+  </script>
+{% endif %}

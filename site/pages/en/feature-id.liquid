@@ -1,0 +1,53 @@
+{% assign sorted_feature_articles = collections.features | sort: 'rank' %}
+
+{% assign sorted_all_articles = collections.articles | sort: 'rank' %}
+{% for article in sorted_all_articles %}
+  {% if article.slug == custom_entry.parent_feature_slug %}
+    {% assign article_titre = article.titre_en %}
+    {% assign article_text = article.text_en %}
+  {% endif %}
+{% endfor %}
+
+<div class='container' id="content">
+  <div class='space-90'></div>
+  <div class="center-title">
+    <h2>{{article_titre}}</h2>
+    {{article_text}}
+  </div>
+
+  <!--features tabs start-->
+  <div>
+    <!-- Nav tabs -->
+    <ul class="features-tabs nav text-center" role="tablist">
+      {% for article_feature in sorted_feature_articles %}
+        {% if article_feature.parent_feature_slug == custom_entry.parent_feature_slug %}
+          <li class="nav-item " role="presentation">
+            <a class="nav-link {% if article_feature.slug == custom_entry.slug %} active{% endif %}" href="/en/features/{{article_feature.slug}}#content" title="{{article_feature.onglet_titre_en}}">{{article_feature.onglet_titre_en}}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade active show">
+        <div class='row'>
+          <div class="col-md-12">
+            {% if custom_entry.illustration != blank %}
+              <img data-src="{{custom_entry.illustration}}" style="max-width:60%;margin-{% if custom_entry.illustration_align == 'left' %}right{% else %}left{% endif %}:30px;" alt="{{custom_entry.titre_en}}" class="{% if custom_entry.illustration_align == 'left' %}float-left{% else %}float-right{% endif %} img-fluid">
+            {% endif %}
+            {% if custom_entry.titre_en != blank %}
+              <h3>{{custom_entry.titre_en}}</h3>
+            {% endif %}
+            {% if custom_entry.bouton_texte_en != blank and custom_entry.bouton_lien != blank %}
+              <a href='{{custom_entry.bouton_lien}}' class="btn btn-lg btn-primary" title="{{custom_entry.titre_en}}">{{custom_entry.bouton_texte_en}}</a>
+            {% endif %}
+            {{custom_entry.text_en}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/features tabs-->
+  <div class='space-90'></div>
+</div>

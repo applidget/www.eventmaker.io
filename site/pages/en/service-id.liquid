@@ -1,0 +1,40 @@
+{% assign sorted_articles_service = collections.services | sort: 'rank' %}
+<div class='container'>
+  <div class='space-90'></div>
+  <div class="center-title">
+    <h2>{{custom_entry.titre_en}}</h2>
+    {{custom_entry.text_en}}
+  </div>
+</div>
+
+{% for the_article in sorted_articles_service %}
+  {% if custom_entry.sous_collection %}
+    {% assign link_to_articles = custom_entry.sous_collection | split: ',' %}
+    {% for link_to in link_to_articles %}
+      {% if link_to and link_to == the_article.name %}
+        <section class="{% if the_article.background_color == 'yes' %}grey-bg{% endif %}">
+          <div class="space-90"></div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 margin-b-30">
+                {% if the_article.illustration != blank %}
+                  <img data-src="{{the_article.illustration}}" style="max-width:60%;margin-{% if the_article.illustration_align == 'left' %}right{% else %}left{% endif %}:30px;" alt="{{the_article.titre_en}}" class="{% if the_article.illustration_align == 'left' %}float-left{% else %}float-right{% endif %} img-fluid">
+                {% endif %}
+                {% if the_article.titre_en != blank %}
+                  <h3>{{the_article.titre_en}}</h3>
+                {% endif %}
+                {% if the_article.text_en != blank %}
+                  <div  class="margin-b-20">{{the_article.text_en}}</div>
+                {% endif %}
+                {% if the_article.bouton_texte_en != blank and the_article.bouton_lien != blank %}
+                  <a href="{{the_article.bouton_lien}}" target='_blank' class="btn btn-lg btn-primary btn-rounded" title="{{the_article.titre_en}}">{{the_article.bouton_texte_en}}</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="space-30"></div>
+        </section>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
