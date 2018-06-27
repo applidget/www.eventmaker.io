@@ -1,0 +1,69 @@
+<section class="{% if custom_entry.background_color == 'yes' %}grey-bg{% endif %}">
+  <div class="space-90"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 margin-b-30">
+        {% if custom_entry.picture %}
+          {% assign picture = custom_entry.picture %}
+        {% else %}
+          {% assign picture = custom_entry.illustration_type_event %}
+        {% endif %}
+        {% if picture != blank %}
+          <img data-src="{{picture}}" style="margin-{% if custom_entry.illustration_align == 'left' %}right{% else %}left{% endif %}:30px;" alt="{{custom_entry.titre}}" class="img-event-page img-event-id {% if custom_entry.illustration_align == 'left' %}float-left{% else %}float-right{% endif %} img-fluid">
+        {% endif %}
+        {% if custom_entry.titre != blank %}
+          <h3>{{custom_entry.titre}}</h3>
+        {% endif %}
+        {% if custom_entry.text != blank %}
+          <div class="margin-b-20">{{custom_entry.text}}</div>
+        {% endif %}
+        {% if custom_entry.bouton_texte != blank and custom_entry.bouton_lien != blank %}
+          <a href="{{custom_entry.bouton_lien}}" target='_blank' class="btn btn-lg btn-primary btn-rounded" title="{{custom_entry.titre}}">{{custom_entry.bouton_texte}}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="space-30"></div>
+</section>
+
+{% assign sorted_all_articles = collections.articles | sort: 'rank' %}
+{% assign count = 0 %}
+{% for cas_client in sorted_all_articles %}
+  {% if cas_client.type == "cas_clients" and custom_entry.type_evenements %}
+    {% assign types_event = custom_entry.type_evenements | split: ',' %}
+    {% for one_type_event in types_event %}
+      {% if one_type_event and one_type_event == cas_client.name %}
+        {% assign count = count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+{% if count > 0 %}
+  <div class='grey-bg'>
+    <div class="space-90"></div>
+    <div class="container">
+      <div class="row">
+        {% for cas_client in sorted_all_articles %}
+          {% if cas_client.type == "cas_clients" and custom_entry.type_evenements %}
+            {% assign types_event = custom_entry.type_evenements | split: ',' %}
+            {% for one_type_event in types_event %}
+              {% if one_type_event and one_type_event == cas_client.name %}
+                <div class="col-sm-6 col-lg-3 col-xs-12 margin-b-30">
+                  <div class="feature-box-center text-center">
+                    <img class="img-fluid margin-b-10" data-src="{{cas_client.illustration}}" alt="{{cas_client.titre}}">
+                    <h4 class="text-capitalize">{{cas_client.titre}}</h4>
+                    <p>{{cas_client.intro_fr}}<br/>
+                      <a href="/cas-client/{{cas_client.id}}" title="{{cas_client.titre}}">En savoir plus ...</a>
+                    </p>
+                  </div>
+                </div><!--/col-->
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class='space-60'></div>
+    </div>
+  </div>
+{% endif %}

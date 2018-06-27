@@ -1,0 +1,71 @@
+<section class="pricing-section">
+  <div class="space-90"></div>
+  <div class="container">
+    <div class="center-title">
+      <h2>{% editable_text 'Titre pricing', priority: 98 %}Easy plans. Cancel anytime.{% endeditable_text %}</h2>
+      <p>{% editable_text 'Sous-titre pricing', priority: 98 %}Les plans ci-dessous ont été pensés pour tous les events et tous les budgets.{% endeditable_text %}</p>
+    </div>
+    <div class="row">
+      {% assign sorted_all_plans = collections.plans | sort:'rank' %}
+      {% assign sorted_plans_articles = collections.plans_articles | sort:'rank' %}
+      {% for plan in sorted_all_plans %}
+        <div class='space-90' id="{{plan.slug}}"></div>
+        <div class="col-md-12">
+          <div class="center-title">
+            <h2>{{plan.title}}</h2>
+            {% if plan.pricing %}<p>{{plan.pricing}}</p>{% endif %}
+            {% if plan.extension %}<p>{{plan.extension}}</p>{% endif %}
+          </div>
+        </div>
+        {% assign count = 0 %}
+
+        {% for article in sorted_plans_articles %}
+          {% if plan.slug == article.parent_price_slug %}
+            {% assign count = count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+        {% for article in sorted_plans_articles %}
+          {% if plan.slug == article.parent_price_slug %}
+            {% assign loop_length = count | plus: 0.0  %}
+            {% assign articlerank = article.rank | plus: 2  %}
+            {% assign loop_length = loop_length | plus: 2  %}
+            {% assign opacity = articlerank | divided_by: loop_length  %}
+            {% if plan.featured == "best-plan" %}
+              {% assign r = 0 %}
+              {% assign g = 150 %}
+              {% assign b = 136 %}
+            {% elsif plan.featured == "better-plan" %}
+              {% assign r = 255 %}
+              {% assign g = 82 %}
+              {% assign b = 82 %}
+            {% else %}
+              {% assign r = 0 %}
+              {% assign g = 0 %}
+              {% assign b = 0 %}
+            {% endif %}
+            <div class="col-md-4 margin-b-30">
+              <div class="price-box">
+                <div class="price-header" style="background-color: rgba({{r}}, {{g}}, {{b}}, {{opacity}});">
+                  <h1>{{article.titre}}</h1>
+                  <h4>{{article.sous_titre}}</h4>
+                </div>
+                <ul class="list-unstyled price-features">
+                  {% if article.elements != blank %}
+                    {% assign elements = article.elements | split: '|' %}
+                    {% for element in elements %}
+                      <li>{{element}}</li>
+                    {% endfor %}
+                  {% endif %}
+                </ul>
+                <div class="price-footer">
+                  <a href="{{article.link}}" class="btn btn-rounded btn-dark-border" title="{{article.titre}}">{{article.btn_text}}</a>
+                </div>
+              </div>
+            </div><!--/col-->
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="space-60"></div>
+</section>

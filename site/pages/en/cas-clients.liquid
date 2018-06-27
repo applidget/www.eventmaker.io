@@ -1,0 +1,25 @@
+<div class='grey-bg'>
+  <div class="space-90"></div>
+  <div class="container">
+    <div class="row">
+      {% assign sorted_all_articles = collections.articles | sort:'rank' %}
+      {% for article in sorted_all_articles  %}
+        {% if article.type == "cas_clients" %}
+          <div class="col-sm-6 col-lg-3 margin-b-30">
+            <div class="text-center">
+              {% if article.illustration != blank %}
+                <img data-src="{{article.illustration}}" class="img-fluid margin-b-10" alt="{{article.titre_en}}">
+              {% endif %}
+              <h4 class="text-capitalize">{{article.titre_en}}</h4>
+              {{article.intro_en}}
+              <p>
+                <a href="/en/cas-client/{{article.id}}" title="{{article.titre_en}}">More ...</a>
+              </p>
+            </div>
+          </div><!--/col-->
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class='space-60'></div>
+  </div>
+</div>

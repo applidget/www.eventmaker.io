@@ -1,0 +1,25 @@
+<div class='grey-bg'>
+  <div class="space-90"></div>
+  <div class="container">
+    <div class="row">
+      {% assign sorted_all_articles = collections.articles | sort:'rank' %}
+      {% for article in sorted_all_articles  %}
+        {% if article.type == "events_type" %}
+          <div class="col-md-6 col-lg-3 margin-b-30">
+            <div class="feature-box-center text-center">
+              {% if article.illustration_type_event != blank %}
+                <img class="img-event" data-src="{{article.illustration_type_event}}" alt="{{article.titre}}">
+              {% endif %}
+              <h4 class="text-capitalize">{{article.titre}}</h4>
+              {{article.intro_fr}}
+              <p>
+                <a href="/events/{{article.slug}}" title="{{article.titre}}">En savoir plus ...</a>
+              </p>
+            </div>
+          </div><!--/col-->
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class='space-60'></div>
+  </div>
+</div>
